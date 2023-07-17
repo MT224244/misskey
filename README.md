@@ -1,3 +1,13 @@
+**※このリポジトリは、[misskey.mt224244.com](https://misskey.mt224244.com)用にカスタマイズされています。**
+
+Misskey本体。
+
+- misskey
+- [misskey-backup](https://github.com/MT224244/misskey-backup)
+- [misskey-nginx-proxy](https://github.com/MT224244/misskey-nginx-proxy)
+
+---
+
 <div align="center">
 <a href="https://misskey-hub.net">
 	<img src="./assets/title_float.svg" alt="Misskey logo" style="border-radius:50%" width="400"/>
