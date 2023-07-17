@@ -3,65 +3,54 @@ version: "3"
 services:
   web:
     build: .
+    container_name: web
     restart: always
-    links:
-      - db
-      - redis
-#     - meilisearch
     depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    ports:
-      - "3000:3000"
+      - postgres
+      - keydb
+    expose:
+      - "3000"
     networks:
-      - internal_network
-      - external_network
+      - internal
+      - misskey-web
+    env_file:
+      - .config/.env.misskey
     volumes:
-      - ./files:/misskey/files
       - ./.config:/misskey/.config:ro
 
-  redis:
+  keydb:
+    image: eqalpha/keydb:alpine
+    container_name: keydb
     restart: always
-    image: redis:7-alpine
     networks:
-      - internal_network
+      - internal
     volumes:
-      - ./redis:/data
+      - ../misskey-data/misskey/keydb:/data
     healthcheck:
-      test: "redis-cli ping"
+      test: "keydb-cli ping"
       interval: 5s
       retries: 20
 
-  db:
-    restart: always
+  postgres:
     image: postgres:15-alpine
+    container_name: postgres
+    restart: always
     networks:
-      - internal_network
+      - internal
+      - misskey-postgres
     env_file:
-      - .config/docker.env
+      - .config/.env.postgres
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - ../misskey-data/misskey/postgres:/var/lib/postgresql/data
     healthcheck:
       test: "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"
       interval: 5s
       retries: 20
 
-#  meilisearch:
-#    restart: always
-#    image: getmeili/meilisearch:v1.1.1
-#    environment:
-#      - MEILI_NO_ANALYTICS=true
-#      - MEILI_ENV=production
-#    env_file:
-#      - .config/meilisearch.env
-#    networks:
-#      - internal_network
-#    volumes:
-#      - ./meili_data:/meili_data
-
 networks:
-  internal_network:
+  internal:
     internal: true
-  external_network:
+  misskey-web:
+    external: true
+  misskey-postgres:
+    external: true
