@@ -34,7 +34,7 @@ port: 3000
 #───┘ PostgreSQL configuration └────────────────────────────────
 
 db:
-  host: db
+  host: postgres
   port: 5432
 
   # Database name
@@ -72,7 +72,7 @@ dbReplications: false
 #───┘ Redis configuration └─────────────────────────────────────
 
 redis:
-  host: redis
+  host: keydb
   port: 6379
   #family: 0  # 0=Both, 4=IPv4, 6=IPv6
   #pass: example-pass

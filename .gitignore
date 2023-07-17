@@ -32,9 +32,9 @@ coverage
 
 # config
 /.config/*
-!/.config/example.yml
-!/.config/docker_example.yml
-!/.config/docker_example.env
+!/.config/default.yml.docker_example
+!/.config/default.yml.example
+!/.config/.env.*.example
 docker-compose.yml
 !/.devcontainer/docker-compose.yml
 
