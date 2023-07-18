@@ -1,7 +1,6 @@
 <template>
 <div v-if="meta" class="rsqzvsbo">
 	<MkFeaturedPhotos class="bg"/>
-	<XTimeline class="tl"/>
 	<div class="shape1"></div>
 	<div class="shape2"></div>
 	<img src="/client-assets/misskey.svg" class="misskey"/>
@@ -30,7 +29,7 @@
 <script lang="ts" setup>
 import { } from 'vue';
 import { Instance } from 'misskey-js/built/entities';
-import XTimeline from './welcome.timeline.vue';
+import MkTimeline from '@/components/MkTimeline.vue';
 import MarqueeText from '@/components/MkMarquee.vue';
 import MkFeaturedPhotos from '@/components/MkFeaturedPhotos.vue';
 import MkInfo from '@/components/MkInfo.vue';
@@ -67,23 +66,23 @@ os.apiGet('federation/instances', {
 		height: 100vh;
 	}
 
-	> .tl {
-		position: fixed;
-		top: 0;
-		bottom: 0;
-		right: 64px;
-		margin: auto;
-		padding: 128px 0;
-		width: 500px;
-		height: calc(100% - 256px);
-		overflow: hidden;
-		-webkit-mask-image: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 128px, rgba(0,0,0,1) calc(100% - 128px), rgba(0,0,0,0) 100%);
-		mask-image: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 128px, rgba(0,0,0,1) calc(100% - 128px), rgba(0,0,0,0) 100%);
+> .tl {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 64px;
+	margin: auto;
+	padding: 128px 0;
+	width: 500px;
+	height: calc(100% - 256px);
+	overflow: hidden;
+	-webkit-mask-image: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 128px, rgba(0,0,0,1) calc(100% - 128px), rgba(0,0,0,0) 100%);
+	mask-image: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 128px, rgba(0,0,0,1) calc(100% - 128px), rgba(0,0,0,0) 100%);
 
-		@media (max-width: 1200px) {
-			display: none;
-		}
+	@media (max-width: 1200px) {
+		display: none;
 	}
+}
 
 	> .shape1 {
 		position: fixed;
@@ -133,12 +132,8 @@ os.apiGet('federation/instances', {
 	> .contents {
 		position: relative;
 		width: min(430px, calc(100% - 32px));
-		margin-left: 128px;
+		margin: auto;
 		padding: 100px 0 100px 0;
-
-		@media (max-width: 1200px) {
-			margin: auto;
-		}
 	}
 
 	> .federation {
