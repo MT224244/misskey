@@ -13,11 +13,8 @@
 				<!-- eslint-disable-next-line vue/no-v-html -->
 				<div v-html="meta.description || i18n.ts.headlineMisskey"></div>
 			</div>
-			<div v-if="instance.disableRegistration" :class="$style.mainWarn">
-				<MkInfo warn>{{ i18n.ts.invitationRequiredToRegister }}</MkInfo>
-			</div>
+			<span @click="signup()"></span>
 			<div class="_gaps_s" :class="$style.mainActions">
-				<MkButton :class="$style.mainAction" full rounded gradate data-cy-signup style="margin-right: 12px;" @click="signup()">{{ i18n.ts.joinThisServer }}</MkButton>
 				<MkButton :class="$style.mainAction" full rounded @click="exploreOtherServers()">{{ i18n.ts.exploreOtherServers }}</MkButton>
 				<MkButton :class="$style.mainAction" full rounded data-cy-signin @click="signin()">{{ i18n.ts.login }}</MkButton>
 			</div>
@@ -25,12 +22,12 @@
 	</div>
 	<div v-if="stats" :class="$style.stats">
 		<div :class="[$style.statsItem, $style.panel]">
-			<div :class="$style.statsItemLabel">{{ i18n.ts.users }}</div>
-			<div :class="$style.statsItemCount"><MkNumber :value="stats.originalUsersCount"/></div>
-		</div>
-		<div :class="[$style.statsItem, $style.panel]">
 			<div :class="$style.statsItemLabel">{{ i18n.ts.notes }}</div>
 			<div :class="$style.statsItemCount"><MkNumber :value="stats.originalNotesCount"/></div>
+		</div>
+		<div :class="[$style.statsItem, $style.panel]">
+			<div :class="$style.statsItemLabel">{{ i18n.ts.customEmojis }}</div>
+			<div :class="$style.statsItemCount"><MkNumber :value="customEmojis.length"/></div>
 		</div>
 	</div>
 	<div v-if="instance.policies.ltlAvailable" :class="[$style.tl, $style.panel]">
@@ -58,6 +55,7 @@ import { instanceName } from '@/config';
 import * as os from '@/os';
 import { i18n } from '@/i18n';
 import { instance } from '@/instance';
+import { customEmojis } from '@/custom-emojis';
 import number from '@/filters/number';
 import MkNumber from '@/components/MkNumber.vue';
 import XActiveUsersChart from '@/components/MkVisitorDashboard.ActiveUsersChart.vue';
