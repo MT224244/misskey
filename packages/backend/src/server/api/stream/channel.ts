@@ -1,15 +1,22 @@
+/*
+ * SPDX-FileCopyrightText: syuilo and other misskey contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { bindThis } from '@/decorators.js';
-import type Connection from './index.js';
+import type Connection from './Connection.js';
 
 /**
  * Stream channel
  */
+// eslint-disable-next-line import/no-default-export
 export default abstract class Channel {
 	protected connection: Connection;
 	public id: string;
 	public abstract readonly chName: string;
 	public static readonly shouldShare: boolean;
 	public static readonly requireCredential: boolean;
+	public static readonly kind?: string | null;
 
 	protected get user() {
 		return this.connection.user;
@@ -33,6 +40,10 @@ export default abstract class Channel {
 
 	protected get userIdsWhoBlockingMe() {
 		return this.connection.userIdsWhoBlockingMe;
+	}
+
+	protected get userMutedInstances() {
+		return this.connection.userMutedInstances;
 	}
 
 	protected get followingChannels() {
@@ -61,6 +72,15 @@ export default abstract class Channel {
 	}
 
 	public abstract init(params: any): void;
+
 	public dispose?(): void;
+
 	public onMessage?(type: string, body: any): void;
+}
+
+export type MiChannelService<T extends boolean> = {
+	shouldShare: boolean;
+	requireCredential: T;
+	kind: T extends true ? string : string | null | undefined;
+	create: (id: string, connection: Connection) => Channel;
 }

@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: syuilo and other misskey contributors
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { Injectable } from '@nestjs/common';
 import { bindThis } from '@/decorators.js';
 import { HybridTimelineChannelService } from './channels/hybrid-timeline.js';
@@ -14,6 +19,7 @@ import { AntennaChannelService } from './channels/antenna.js';
 import { DriveChannelService } from './channels/drive.js';
 import { HashtagChannelService } from './channels/hashtag.js';
 import { RoleTimelineChannelService } from './channels/role-timeline.js';
+import { type MiChannelService } from './channel.js';
 
 @Injectable()
 export class ChannelsService {
@@ -36,7 +42,7 @@ export class ChannelsService {
 	}
 
 	@bindThis
-	public getChannelService(name: string) {
+	public getChannelService(name: string): MiChannelService<boolean> {
 		switch (name) {
 			case 'main': return this.mainChannelService;
 			case 'homeTimeline': return this.homeTimelineChannelService;

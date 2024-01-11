@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: syuilo and other misskey contributors
+SPDX-License-Identifier: AGPL-3.0-only
+-->
+
 <template>
 <div v-if="pending">
 	<MkLoading/>
@@ -16,8 +21,7 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
 import MkButton from '@/components/MkButton.vue';
-import { defaultStore } from '@/store';
-import { i18n } from '@/i18n';
+import { i18n } from '@/i18n.js';
 
 const props = defineProps<{
 	p: () => Promise<any>;
@@ -26,7 +30,7 @@ const props = defineProps<{
 const pending = ref(true);
 const resolved = ref(false);
 const rejected = ref(false);
-const result = ref(null);
+const result = ref<any>(null);
 
 const process = () => {
 	if (props.p == null) {
