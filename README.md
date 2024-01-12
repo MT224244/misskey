@@ -6,6 +6,44 @@ Misskey本体。
 - [misskey-backup](https://github.com/MT224244/misskey-backup)
 - [misskey-nginx-proxy](https://github.com/MT224244/misskey-nginx-proxy)
 
+## 起動方法
+
+1. `.config/.env.misskey.example` をコピーして `.config/.env.misskey` を作る
+1. `.config/.env.postgres.example` をコピーして `.config/.env.postgres` を作る
+1. `.config/default.yml.docker_compose` をコピーして `.config/default.yml` を作る
+1. `docker-compose_example.yml` をコピーして `docker-compose.yml` を作る
+1. 必要な情報を入れる
+1. `docker compose build`
+1. `docker compose run --rm web pnpm run init`
+1. `docker compose up -d`
+
+## ローカル実行時
+
+- `.config/.env.misskey`
+	- `VIRTUAL_HOST=localhost`
+- `.config/default.yml`
+	- `url: http://localhost:3000`
+- `docker-compose.yml`
+	- `web` の `expose` は `ports` に変える
+	- `ports` の値は `3000:3000`
+
+これで `http://localhost:3000` にアクセスすれば見られるはず
+
+## バージョンアップ方法
+
+1. 現行バージョンのブランチにcheckout
+1. `{新バージョン}-custom` ブランチを切る
+1. 新バージョンのタグをマージする
+	- 必ず一度ローカルで動作確認すること
+1. push
+1. 本番環境のMisskeyを止める
+	- `docker compose down`
+1. `{新バージョン}-custom` にcheckout
+1. build & 起動
+	1. `docker compose build`
+	1. `docker compose run --rm web pnpm run init`
+	1. `docker compose up -d`
+
 ---
 
 <div align="center">
