@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: syuilo and other misskey contributors
+SPDX-License-Identifier: AGPL-3.0-only
+-->
+
 <template>
 <div>
 	<Transition :name="defaultStore.state.animation ? '_transition_zoom' : ''" mode="out-in">
@@ -13,12 +18,13 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import * as os from '@/os';
-import { useInterval } from '@/scripts/use-interval';
+import * as Misskey from 'misskey-js';
+import * as os from '@/os.js';
+import { useInterval } from '@/scripts/use-interval.js';
 import MkInstanceCardMini from '@/components/MkInstanceCardMini.vue';
-import { defaultStore } from '@/store';
+import { defaultStore } from '@/store.js';
 
-const instances = ref([]);
+const instances = ref<Misskey.entities.FederationInstance[]>([]);
 const fetching = ref(true);
 
 const fetch = async () => {
