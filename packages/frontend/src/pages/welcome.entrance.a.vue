@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: syuilo and other misskey contributors
+SPDX-FileCopyrightText: syuilo and misskey-project
 SPDX-License-Identifier: AGPL-3.0-only
 -->
 
@@ -37,7 +37,7 @@ import * as Misskey from 'misskey-js';
 import MarqueeText from '@/components/MkMarquee.vue';
 import MkFeaturedPhotos from '@/components/MkFeaturedPhotos.vue';
 import misskeysvg from '/client-assets/misskey.svg';
-import * as os from '@/os.js';
+import { misskeyApi, misskeyApiGet } from '@/scripts/misskey-api.js';
 import MkVisitorDashboard from '@/components/MkVisitorDashboard.vue';
 import { getProxiedImageUrl } from '@/scripts/media-proxy.js';
 
@@ -51,11 +51,11 @@ function getInstanceIcon(instance: Misskey.entities.FederationInstance): string 
 	return getProxiedImageUrl(instance.iconUrl, 'preview');
 }
 
-os.api('meta', { detail: true }).then(_meta => {
+misskeyApi('meta', { detail: true }).then(_meta => {
 	meta.value = _meta;
 });
 
-os.apiGet('federation/instances', {
+misskeyApiGet('federation/instances', {
 	sort: '+pubSub',
 	limit: 20,
 }).then(_instances => {
