@@ -31,18 +31,34 @@ Misskey本体。
 
 ## バージョンアップ方法
 
-1. 現行バージョンのブランチにcheckout
-1. `{新バージョン}-custom` ブランチを切る
+### 開発環境
+
+1. upstreamをpull
+1. `misskey-mt224244` にcheckout
 1. 新バージョンのタグをマージする
+	- `package.json` のversionも更新しておく
 	- 必ず一度ローカルで動作確認すること
-1. push
+1. `{バージョン名}-mt224244` でタグを作る
+1. push(タグも忘れずにpush)
+
+### 本番環境
+
 1. 本番環境のMisskeyを止める
 	- `docker compose down`
-1. `{新バージョン}-custom` にcheckout
+1. `misskey-mt224244` にcheckout
+1. pull
 1. build & 起動
 	1. `docker compose build`
 	1. `docker compose run --rm web pnpm run init`
 	1. `docker compose up -d`
+
+### out of memoryでビルドが落ちる場合
+
+`Dockerfile` の `NODE_ENV` が書いてあるあたりに以下を追加
+
+```dockerfile
+ARG NODE_OPTIONS="--max-old-space-size=4096"
+```
 
 ---
 
